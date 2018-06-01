@@ -2,15 +2,15 @@
 <html lang="en-us">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Word Guess Game
-  </title>
-  <!-- Added a link to Style-->
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-  <!-- Added a link to Bootstrap-->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <!-- Added a link to JavaScript-->
-  <script type="text/javascript" src="assets/javascript/game.js"></script>
+    <meta charset="UTF-8">
+    <title>Word Guess Game
+    </title>
+    <!-- Added a link to Style-->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <!-- Added a link to Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Added a link to JavaScript-->
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
 </head>
 
 <body>
@@ -18,89 +18,106 @@
     <h1>Word Guess Game</h1>
     <p>Guess the Super Smash Bros. character</p>
 
-    <div id="guessHolder">
-    </div>
+    <div id="guessMade"></div>
+    <div id="guessLeft"></div>
     <br>
-    <div id="results">
-    </div>
     <div id="letterBlanks"></div>
+    <div id="theAnswer"></div>
     
 
-  <script type="text/javascript">
+<script type="text/javascript">
   
     // Creates variables
-    var characterList = "Mario, Donkey Kong, Link, Samus Aran, Yoshi, Kirby, Fox, Pikachu, Ness, Captain Falcon, Bowser, Peach, Ice Climbers, Zelda, Sheik, Luiki, Jigglypuff, Mewtwo, Marth, Mr Game And Watch, DrMario, Ganondorf, Falco, Young Link, Pichu, Roy".split(", ");
+    /*var characterList = "Mario, Donkey Kong, Link, Samus Aran, Yoshi, Kirby, Fox, Pikachu, Ness, Captain Falcon, Bowser, Peach, Ice Climbers, Zelda, Sheik, Luiki, Jigglypuff, Mewtwo, Marth, Mr Game And Watch, Dr Mario, Ganondorf, Falco, Young Link, Pichu, Roy".split(", ");*/
+    var characterList = "mario, donkey kong, link, samus aran, yoshi, kirby, fox, pikachu, ness, captain falcon, bowser, peach, ice climbers, zelda, sheik, luigi, jigglypuff, mewtwo, marth, mr game and watch, dr mario, ganondorf, falco, young link, pichu, roy".split(", ");
+    var alpha = "abcdefghijklmnopqrstuvwxyz".split('');
     console.log(characterList);
-    var guess = "";
+    var word = characterList[Math.floor(Math.random() * characterList.length)];
+    var guessesLeft = 15;
     var guessesMade = "";
+    var letterBlanks = [];
+    var wins = 0;
+    var losses = 0;
+    var result = [];
     
-    //var letter = word.split('');
-    
-    //console.log(letter);
-    function setUpGame() {
-        var word = characterList[Math.floor(Math.random() * characterList.length)];
-        var letterBlanks = [];
+    //set up function that will take the length of the name selected and add blank spaces
+    /*function setUpGame() {
+        
+        console.log(word);
         for (var i=0; i < word.length; i++){
-		    letterBlanks.push("_");
+            if (word[i] === " ") {
+                letterBlanks.push("&nbsp;");
+            } else {
+                letterBlanks.push(" _ ");
+            }
+            document.write(letterBlanks[i]);
         }
         console.log(letterBlanks);
     };
-    
-    /*for (var i = 0; i < word.length; i++) {
-        if (word[i] === " ") {
-            document.querySelector("#guessHolder").append = " ";
-            space = 1;
-        } else {
-            //document.querySelector("#guessHolder").append = " _ ";
-            document.getElementById("guessHolder").innerHTML = " _ ";
-        }
-        //console.log(word[i]);
-    }*/
-
-
-    //for (var j = 0; j < word.length; j++) {
-     //   console.log(letter);
-    //}
-    
-
-
-    var guessesLeft = 15;
-    var wins = 0;
-    var losses = 0;
-
-    // This function is run whenever the user presses a key.
-    /*document.onkeyup = function(event) {
-        console.log(i);
-        // Determines which key was pressed.
-        var userGuess = event.key;
-        userGuess = userGuess.toLowerCase();
+    setUpGame();*/
+    function setUpGame() {
         
-        // Only run the following code block if the user presses "a-z".
-        if (event.keyCode >= 65 && event.keyCode <= 90) {
-            // Nested if statement to make sure results are only added if the correct key is pressed.
-            // Randomly chooses a choice from the options array. This is the Computer's guess.
-            var computerGuess = alpha[Math.floor(Math.random() * alpha.length)];
-            if (computerGuess === userGuess) {
-                //you score
-                wins++;
-                guessesLeft = 9;
-            } else {   
-                //user scores
-                guessesLeft--;
-                guessesMade = userGuess + " " + guessesMade;
-                if (guessesLeft === 0) {
-                    losses++;
-                    guessesLeft = 9;
-                    guessesMade = "";
-                }
-            }
-            console.log(userGuess + " " + computerGuess);
-            // Select the div with the correct id, and insert the following HTML into it.
-            //document.querySelector("#game").innerHTML = "You chose: " + userGuess + ". <br />The computer chose: " + computerGuess;
-            //document.querySelector("#results").innerHTML = "Wins: " + wins + ". <br />Losses: " + losses + ". <br />Guesses Left: " + guessesLeft + "<br />Guesses so far: " + guessesMade;
-        }*/
+        
 
-  </script>
+        for(var i = 0; i < word.length; i++){
+            if (word[i] === " ") {
+                result.push("&nbsp;");
+            } else {
+                result.push(" _ ");
+            }
+        }
+        
+        //result.toString(); //returns _,_,_,_,_,_
+        /*result[0] //returns the first underscore
+        result[5] //returns the last underscore
+        result[2] = 'A'; // Replaces the third underscore with the letter 'A' (zero based)*/
+        
+        //for(var i = 0; i < word.length; i++) { 
+          //  document.write(result[i] + '  ');  
+        //}
+        console.log(result);
+        console.log(word);
+        //return(result);
+    };
+    setUpGame();
+console.log(result);
+    function updateWrongGuess() {
+	    guessesLeft--;
+	    //document.getElementById("guessMade").innerHTML = guessesMade;
+	    document.getElementById("guessLeft").innerHTML = guessesLeft;
+    };
+    updateWrongGuess();
+    
+
+    document.onkeyup = function(event) {
+        
+        if (event.keyCode >= 65 && event.keyCode <= 90) {
+	        var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+            console.log(userGuess);
+	        if (word.indexOf (userGuess) > -1) {
+		        console.log("You guessed a correct letter");
+    		    document.getElementById('theAnswer').innerHTML += userGuess;
+	    	    //document.getElementById('lettersGuessed').innerHTML += userGuess;
+		        wins = wins + 1;
+		        if (wins === 6) {
+        		    console.log("YOU WON");
+        		    setUpGame();
+                }
+                
+            } else {
+	            guessesLeft = guessesLeft - 1;
+    	        if (guessesLeft === 0) {
+                    console.log("YOU LOSE");
+                } else {
+	                console.log("WRONG GUESS! YOU NOW HAVE " + guessesLeft + " LEFT.");
+		            //document.getElementById('guessesMade').innerHTML += userGuess;
+    		        //document.getElementById('guess').innerHTML = guessesLeft;
+	            }
+            }
+        }
+    };
+
+</script>
 
 </body>
 
